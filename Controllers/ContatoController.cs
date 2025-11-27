@@ -28,7 +28,7 @@ namespace ModuloApi.Controllers
         {
             _context.Add(contato);
             _context.SaveChanges();
-            return Ok(contato);
+            return CreatedAtAction(nameof(ObterPorId), new { id = contato.id }, contato);
         }
 
         [HttpGet("{id}")]
@@ -42,6 +42,12 @@ namespace ModuloApi.Controllers
             return Ok(contato);
         }
 
+        [HttpGet("ObterPorNome")]
+        public IActionResult ObterPorNome(string nome)
+        {
+            var contatos = _context.Contatos.Where(x => x.Nome.Contains(nome));
+            return Ok(contatos);
+        }
         [HttpPut("id")]
         public  IActionResult Atualizar(int id, Contato contato)
         {
